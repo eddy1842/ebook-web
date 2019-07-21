@@ -1,22 +1,22 @@
 
 部署方法
 ===========
-## 环境
-常见Linux环境均可部署；主要是依赖Python2.7（calibre依赖该版本）、Sqlite。这里选择 Ubuntu 16.04.5 LTS 进行部署
+## 環境
+常見Linux環境均可部署；主要是依賴Python2.7（calibre依賴該版本）、Sqlite。這裡選擇 Ubuntu 16.04.5 LTS 進行部署
 
-## 部署目录
-* /data/books/: 作为书库目录
-* /data/release/www/calibre.talebook.org/: 作为代码目录
+## 部署目錄
+* /data/books/: 作為書庫目錄
+* /data/release/www/calibre.talebook.org/: 作為代碼目錄
 
-## 安装依赖包
+## 安裝依賴包
 ```
 sudo apt-get install python2.7 calibre python-pip nginx-extras unzip supervisor sqlite3 git
 sudo pip install social-auth-app-tornado social-auth-storage-sqlalchemy "tornado<6.0" Baidubaike jinja
 ```
 
-## 部署代码
-注意：如果要修改访问域名，可以不调整代码目录，只调整nginx中的配置即可。
-各个目录的配置项，都可以在配置文件```webserver/settings.py```找到，可以根据自己的需求进行调整。
+## 部署代碼
+注意：如果要修改訪問域名，可以不調整代碼目錄，只調整nginx中的配置即可。
+各個目錄的配置項，都可以在配置文件```webserver/settings.py```找到，可以根據自己的需求進行調整。
 ```
 mkdir -p /data/log/
 mkdir -p /data/release/www/calibre.talebook.org/
@@ -26,23 +26,23 @@ git clone https://github.com/talebook/calibre-webserver.git
 
 ```
 
-创建基础书库和DB
+創建基礎書庫和DB
 ===========
 
-## 创建书库
-请事先准备30本书籍。
-使用以下命令创建书库：
+## 創建書庫
+請事先準備30本書籍。
+使用以下命令創建書庫：
 ```
-calibredb add --library-path=/data/books/library/  -r  书籍目录
+calibredb add --library-path=/data/books/library/  -r  書籍目錄
 ```
 
-或者可以从github下载talebook.org的书库（非常非常大，会很慢）
+或者可以從github下載talebook.org的書庫（非常非常大，會很慢）
 ```
 git clone https://github.com/talebook/talebook-library.git /data/books/library
 ```
 
-## 创建DB
-执行以下命令，创建程序DB。
+## 創建DB
+執行以下命令，創建程序DB。
 ```
 python /data/release/www/calibre.talebook.org/calibre-webserver/server.py --syncdb
 ```
@@ -50,83 +50,83 @@ python /data/release/www/calibre.talebook.org/calibre-webserver/server.py --sync
 
 配置Kindle推送功能
 ============
-## 使用QQ邮箱推送
-进入[QQ邮箱网址](http://service.mail.qq.com/cgi-bin/help?subtype=1&&no=1001256&&id=28), 申请SMTP账号，用于给Kindle推送。
+## 使用QQ郵箱推送
+進入[QQ郵箱網址](http://service.mail.qq.com/cgi-bin/help?subtype=1&&no=1001256&&id=28), 申請SMTP賬號，用於給Kindle推送。
 
-填写到```webserver/settings.py```配置文件中下述字段里：
+填寫到```webserver/settings.py```配置文件中下述字段裡：
 ```
 'smtp_server'                      : "smtp.talebook.org",
 'smtp_username'                    : "sender@talebook.org",
 'smtp_password'                    : "password",
 ```
 
-配置用户登录功能
+配置用戶登錄功能
 =============
-根据自己的诉求，可以配置为个人自用，或者允许网友使用社交网站账号登录。
+根據自己的訴求，可以配置為個人自用，或者允許網友使用社交網站賬號登錄。
 
-## 配置自动登录（个人自用）
-如果只是用于个人书籍、不会提供互联网服务的话，可以配置自动登录，免去社交网站的用户登录。
-在```webserver/settings.py```中找到 __auto_login__ 选项，将其设置为1。
+## 配置自動登錄（個人自用）
+如果只是用於個人書籍、不會提供互聯網服務的話，可以配置自動登錄，免去社交網站的用戶登錄。
+在```webserver/settings.py```中找到 __auto_login__ 選項，將其設置為1。
 ```
 'auto_login': 1
 ```
 
-## 申请社交网站应用账号（多用户使用）
-在配置文件```webserver/settings.py```中，可以看到有相关的配置信息：
+## 申請社交網站應用賬號（多用戶使用）
+在配置文件```webserver/settings.py```中，可以看到有相關的配置信息：
 
-### 允许微博登录
-进入[微博开发者网址](http://open.weibo.com/developers), 申请微博登录服务账号，填写到配置中。
+### 允許微博登錄
+進入[微博開發者網址](http://open.weibo.com/developers), 申請微博登錄服務賬號，填寫到配置中。
 ```
 'SOCIAL_AUTH_WEIBO_KEY'            : '',
 'SOCIAL_AUTH_WEIBO_SECRET'         : '',
 ```
 
-### 允许QQ登录
-进入[QQ互联登录网址](https://connect.qq.com/), 申请QQ登录服务账号，填写到配置中。
+### 允許QQ登錄
+進入[QQ互聯登錄網址](https://connect.qq.com/), 申請QQ登錄服務賬號，填寫到配置中。
 ```
 'SOCIAL_AUTH_QQ_KEY'               : '',
 'SOCIAL_AUTH_QQ_SECRET'            : '',
 ```
 
 
-启动服务
+啟動服務
 =============
 ## 配置supervisord
-如果前面过程中，修改过代码目录路径，那么将 ``conf/supervisor/calibre-webserver.conf`` 中的路径调整一下，放到 ``/etc/supervisor/conf.d/`` 中。
+如果前面過程中，修改過代碼目錄路徑，那麼將 ``conf/supervisor/calibre-webserver.conf`` 中的路徑調整一下，放到 ``/etc/supervisor/conf.d/`` 中。
 
-启动命令如下：
+啟動命令如下：
 ```
 sudo supervisorctl reload all
 sudo supervisorctl restart all
 ```
 
 ## 配置NGINX
-将 ``conf/nginx/talebook.org`` 中的域名修改为自己的网站域名，并放置到nginx的配置目录中。
+將 ``conf/nginx/talebook.org`` 中的域名修改為自己的網站域名，並放置到nginx的配置目錄中。
 
-启动命令如下：
+啟動命令如下：
 ```
 sudo nginx -s start
 ```
 
-访问
+訪問
 ===============
-* 打开 http://web_server_ip:8000/ 测试python启动是否正常；
-* 打开 https://web_server_ip/ 测试nginx启动是否正常
+* 打開 http://web_server_ip:8000/ 測試python啟動是否正常；
+* 打開 https://web_server_ip/ 測試nginx啟動是否正常
 
 
-问题排查
+問題排查
 ===============
-* supervisord启动失败
+* supervisord啟動失敗
 
-如果有调整过supervisord里面的配置（例如端口、目录），一定要执行```sudo supervisorctl reload all```重新读取配置，不然是不会生效的，可能会导致启动失败。
+如果有調整過supervisord裡面的配置（例如端口、目錄），一定要執行```sudo supervisorctl reload all```重新讀取配置，不然是不會生效的，可能會導致啟動失敗。
 
-如果提示```calibre:tornado-8000: ERROR(spawn error)```，那么说明环境没配置正确。
-请打开日志文件```/data/log/calibre-webserver.log```查看原因，重点查看最后一次出现Traceback报错，关注其中```Traceback (most recent call last)```提示的错误原因。
+如果提示```calibre:tornado-8000: ERROR(spawn error)```，那麼說明環境沒配置正確。
+請打開日誌文件```/data/log/calibre-webserver.log```查看原因，重點查看最後一次出現Traceback報錯，關注其中```Traceback (most recent call last)```提示的錯誤原因。
 
-* 网站能打开，但是提示```500: internal server error```
+* 網站能打開，但是提示```500: internal server error```
 
-这种情况，一般是服务运行时出现异常，常见原因有目录权限没有配置正常、数据库没创建好、或者触发了某个代码BUG。
+這種情況，一般是服務運行時出現異常，常見原因有目錄權限沒有配置正常、數據庫沒創建好、或者觸發了某個代碼BUG。
 
-请打开日志文件```/data/log/calibre-webserver.log```查看原因，重点查看最后一次出现Traceback报错，关注其中```Traceback (most recent call last)```提示的错误原因，并提issue联系开发者排查。
+請打開日誌文件```/data/log/calibre-webserver.log```查看原因，重點查看最後一次出現Traceback報錯，關注其中```Traceback (most recent call last)```提示的錯誤原因，並提issue聯繫開發者排查。
 
 
