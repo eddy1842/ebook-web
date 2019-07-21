@@ -16,7 +16,7 @@ settings = {
     "login_url"     : "/login",
     "xsrf_cookies"  : False,
     "user_database" : 'sqlite:////data/books/develop.db',
-    "site_title"    : u"奇异书屋",
+    "site_title"    : u"奇異書屋",
 
     # Set this if you don't need any user management
     #"auto_login"    : 1,
