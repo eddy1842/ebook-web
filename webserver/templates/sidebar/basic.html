@@ -20,33 +20,6 @@
         <a href="/hot"      class="list-group-item {% if category == "hot"        %}active{% endif %}">熱度榜單</a>
     </div>
 
-    <span class="legend">下載</span>
-    <div class="list-group">
-        <a href="https://github.com/talebook/calibre-webserver" class="list-group-item">站點源碼</a>
-        <a href="https://github.com/talebook/talebook-library" class="list-group-item">書庫打包</a>
-        <a href="http://diumx.com" target="_blank" class="list-group-item">友鏈：芒果讀書</a>
-        <a href="https://bookset.me" target="_blank" class="list-group-item">友鏈：bookset</a>
-        <a href="https://book.killsad.top" target="_blank" class="list-group-item">友鏈：陳蕓書屋</a>
-    </div>
-
-    <span class="legend">系統信息</span>
-    <div class="list-group">
-        <a href="/blog" target="_blank" class="list-group-item">博客</a>
-        <a href="#_" class="list-group-item"><span class="pull-right">1.4.13</span> 系統版本</a>
-        <a href="#_" class="list-group-item"><span class="pull-right">{{db.last_modified()|day}}</span> 最後更新</a>
-        <a href="#_" class="list-group-item"><span class="pull-right">{{count_all_users}}</span> 全部用戶數</a>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-6">
-            <img style="width:100%" class="center-block" src="{{static_url("img/wechat.jpg")}}" atl="wechat: love-talebook" />
-            <p class='text-center'>微信公眾號</p>
-        </div>
-        <div class="col-xs-6">
-            <img style="width:100%" class="center-block" src="{{static_url("img/qq.png")}}" atl="wechat: love-talebook" />
-            <p class='text-center'>QQ讀書群</p>
-        </div>
-    </div>
 
 
     <span class="legend">添加書籍</span>
