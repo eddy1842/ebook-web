@@ -5,12 +5,12 @@
 <table class="table">
     <tr>
         <th>ID</th>
-        <th>用户名</th>
-        <th>来源平台</th>
-        <th>注册时间</th>
-        <th>登录时间</th>
-        <th>登录IP</th>
-        <th>简述</th>
+        <th>用戶名</th>
+        <th>來源平台</th>
+        <th>註冊時間</th>
+        <th>登錄時間</th>
+        <th>登錄IP</th>
+        <th>簡述</th>
         <th>操作</th>
     </tr>
     {% for user in users %}
@@ -25,11 +25,11 @@
         <td>{% if user.access_time %}{{user.access_time.strftime("%Y-%m-%d %H:%M:%S")}}{% endif %}</td>
         <td>{{user.extra.login_ip}}</td>
         <td>
-            {% if user.extra.visit_history    %} {{user.extra.visit_history|length}}访问    {% endif %}
-            {% if user.extra.read_history     %} {{user.extra.read_history|length}}阅读     {% endif %}
+            {% if user.extra.visit_history    %} {{user.extra.visit_history|length}}訪問    {% endif %}
+            {% if user.extra.read_history     %} {{user.extra.read_history|length}}閱讀     {% endif %}
             {% if user.extra.push_history     %} {{user.extra.push_history|length}}推送     {% endif %}
-            {% if user.extra.download_history %} {{user.extra.download_history|length}}下载 {% endif %}
-            {% if user.extra.upload_history   %} {{user.extra.upload_history|length}}上传   {% endif %}
+            {% if user.extra.download_history %} {{user.extra.download_history|length}}下載 {% endif %}
+            {% if user.extra.upload_history   %} {{user.extra.upload_history|length}}上傳   {% endif %}
         </td>
         <td>
             <a class="btn" href="/admin/set?user_id={{user.id}}">Enter</a>
